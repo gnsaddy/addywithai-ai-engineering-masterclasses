@@ -1,8 +1,8 @@
 # AI Engineering Masterclasses: code for every masterclass
 
-Python code for the **AI Engineering Masterclasses** series by **@addywithai**. Each folder matches one masterclass and has its own `README.md`.
+Python code for **AI Engineering: Production Masterclasses** by **@addywithai**. Each folder is a standalone masterclass and has its own `README.md`.
 
-## How to run any lecture
+## How to run any masterclass
 
 ```bash
 cd <folder>
@@ -16,8 +16,9 @@ Then follow the run steps in that folder's `README.md`. Never commit your `.env`
 
 Python 3.10 or newer.
 
-## Masterclasss
+## Masterclasses
 
-| # | Masterclass | Code |
-|---|---|---|
-| 1 | Learn Designing Scalable RAG Pipelines | [01-designing-scalable-rag-pipelines](01-designing-scalable-rag-pipelines) |
+| # | Masterclass | What it covers | Code |
+|---|---|---|---|
+| 1 | Learn Designing Scalable RAG Pipelines | Chunking, search, re-ranking, generation, evals and scaling a RAG pipeline (stdlib Python, CPU only) | [01-designing-scalable-rag-pipelines](01-designing-scalable-rag-pipelines) |
+| 2 | Learn Enterprise AI Agents | Identity, permission-aware search, safe tool calls with approval + idempotency, retries, evals and an end-to-end demo (stdlib Python, CPU only) | [02-enterprise-ai-agents](02-enterprise-ai-agents) |
