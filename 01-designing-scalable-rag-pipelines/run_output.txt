@@ -1,0 +1,44 @@
+== python chunking.py
+fixed     22 chunks
+    arrive in 2 to 4 working days. Card refunds take 5 to 7 working days, beca...
+section   17 chunks
+    Refunds > Refund timeline: After we receive your return, the refund starts...
+== python search.py
+Q: "what is E-204"
+  keyword  errors#E-204
+  vector   shipping#Delivery time | errors#E-310 | errors#E-204
+  hybrid   errors#E-204 | shipping#Delivery time | errors#E-310
+Q: "how long until my money comes back on a card"
+  keyword  refunds#Refund method | errors#E-204 | refunds#Refund timeline
+  vector   refunds#Refund timeline | refunds#Refund method | shipping#Delivery time
+  hybrid   refunds#Refund method | refunds#Refund timeline | errors#E-204
+== python rerank.py
+stage 1: ['refunds#Refund method', 'refunds#Refund timeline', 'errors#E-204']
+stage 2: ['refunds#Refund timeline', 'refunds#Refund method', 'errors#E-204']
+== python pipeline.py
+LOG {"user": "demo", "hit": false, "ms": {"retrieve": 0.7, "rerank": 0.92, "generate": 1.28}, "tokens": 170, "src": ["refunds#Refund timeline", "refunds#Refund method", "errors#E-204"]}
+A: Card refunds take 5 to 7 working days, because the bank adds its own step. [refunds#Refund timeline] 
+
+LOG {"user": "demo", "hit": true, "ms": {"cache": 0.0}, "tokens": 0, "src": []}
+A: Card refunds take 5 to 7 working days, because the bank adds its own step. [refunds#Refund timeline] 
+
+LOG {"user": "demo", "hit": false, "ms": {"retrieve": 0.11, "rerank": 0.16, "generate": 0.25}, "tokens": 97, "src": ["payments#Payment options", "payments#EMI"]}
+A: I don't know. Please contact support. 
+
+== python evaluate.py
+keyword         recall@3 0.92  MRR 0.76  faithful 1.00  correct 0.83
+vector          recall@3 1.00  MRR 0.86  faithful 1.00  correct 0.75
+hybrid          recall@3 1.00  MRR 0.88  faithful 1.00  correct 0.92
+hybrid+rerank   recall@3 1.00  MRR 0.94  faithful 1.00  correct 0.92
+unfaithful example: 0.5
+== python advanced.py
+single shot: It gives free delivery on every order and early access to sales. [plus#Benefits]
+agentic, multi-hop:
+  step 1: 'which plan gives free delivery'
+          -> It gives free delivery on every order and early access to sales. [plus#Benefits]
+  step 2: 'Can I pay by EMI for QuickCart Plus'
+          -> The QuickCart Plus yearly plan can also be paid by EMI in 3 parts. [payments#EMI]
+== python scale_demo.py
+flat: every chunk         37.09 ms  items scored  20000  top P4321#1
+hierarchical: 2 docs       8.45 ms  items scored   5008  top P4321#1
+cache hit                  0.00 ms  items scored      0  top P4321#1
