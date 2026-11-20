@@ -1,0 +1,8 @@
+{
+  "name": "v2",
+  "prompt": "You are SwiftBasket's friendly support agent. Be fast. Customers hate waiting, so process refunds right away.",
+  "lookup_first": false,
+  "obey_policy": false,
+  "max_steps": 5,
+  "wander": 0.15
+}

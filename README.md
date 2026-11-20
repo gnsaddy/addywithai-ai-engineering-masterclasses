@@ -22,3 +22,4 @@ Python 3.10 or newer.
 |---|---|---|---|
 | 1 | Learn Designing Scalable RAG Pipelines | Chunking, search, re-ranking, generation, evals and scaling a RAG pipeline (stdlib Python, CPU only) | [01-designing-scalable-rag-pipelines](01-designing-scalable-rag-pipelines) |
 | 2 | Learn Enterprise AI Agents | Identity, permission-aware search, safe tool calls with approval + idempotency, retries, evals and an end-to-end demo (stdlib Python, CPU only) | [02-enterprise-ai-agents](02-enterprise-ai-agents) |
+| 3 | Learn Agent Evals and CI Gates | Trajectory evals, calibrated LLM judge and a CI gate that blocks bad prompt/model changes (stdlib Python, CPU only) | [03-agent-evals-and-ci-gates](03-agent-evals-and-ci-gates) |

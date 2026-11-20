@@ -1,0 +1,28 @@
+# Runs the agent evals on every pull request that changes the agent, its prompts or the eval set.
+# The gate step exits with code 1 on a regression, so the check turns red and the merge is blocked
+# (make this check "required" in the branch protection rules).
+name: agent-evals
+on:
+  pull_request:
+    paths: ["prompts/**", "agent.py", "shop.py", "evalset.json", "scorers.py"]
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Baseline from main
+        run: |
+          git fetch origin main --depth 1
+          git worktree add ../main origin/main
+          (cd ../main && python run_evals.py v1 --out ../baseline.json)
+      - name: Candidate from this PR
+        run: python run_evals.py "${PROMPT_VERSION:-v1}" --out candidate.json
+        env: { PROMPT_VERSION: "${{ vars.PROMPT_VERSION }}" }
+      - name: Gate
+        run: python gate.py ../baseline.json candidate.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: eval-results, path: candidate.json }
